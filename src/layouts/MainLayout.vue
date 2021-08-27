@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-header class="bg-white text-grey-10" bordered>
-      <q-toolbar>
+      <q-toolbar class="constrain">
         <q-btn
           to="/camera"
           flat
@@ -9,8 +9,9 @@
           icon="eva-camera-outline"
           size="1.25rem"
           dense
-          class="desktop-screen"
+          class="desktop-screen q-mr-xs"
         />
+        <q-separator vertical spaced class="desktop-screen" />
         <q-toolbar-title class="text-grand-hotel text-bold">
           Quasargram
         </q-toolbar-title>
@@ -57,12 +58,14 @@ export default {
 
 <style lang="scss">
 .q-header {
-  .q-toolbar__title {
-    font-size: 1.875rem;
-    text-align: center;
-
+  .q-toolbar {
     @media (min-width: $breakpoint-xs-max) {
+      height: 77px;
       text-align: initial;
+      &__title {
+        font-size: 1.875rem;
+        text-align: center;
+      }
     }
   }
 }
