@@ -2,3 +2,17 @@
 .text-grand-hotel {
   font-family: "Grand Hotel", "Roboto", sans-serif, cursive;
 }
+
+.mobile-screen {
+  display: block;
+  @media (min-width: $breakpoint-xs-max) {
+    display: none;
+  }
+}
+
+.desktop-screen {
+  display: none;
+  @media (min-width: $breakpoint-xs-max) {
+    display: flex;
+  }
+}
