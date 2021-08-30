@@ -38,7 +38,7 @@
       </q-tabs>
     </q-footer>
 
-    <q-page-container>
+    <q-page-container class="bg-grey-1">
       <router-view />
     </q-page-container>
   </q-layout>
@@ -61,10 +61,13 @@ export default {
   .q-toolbar {
     @media (min-width: $breakpoint-xs-max) {
       height: 77px;
-      text-align: initial;
-      &__title {
+    }
+    &__title {
+      text-align: center;
+
+      @media (min-width: $breakpoint-xs-max) {
         font-size: 1.875rem;
-        text-align: center;
+        text-align: initial;
       }
     }
   }
