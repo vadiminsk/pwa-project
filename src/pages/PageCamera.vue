@@ -1,11 +1,7 @@
 <template>
   <q-page class="constrain-more q-pa-md">
     <div class="div camera-frame q-pa-md">
-      <img
-        class="full-width"
-        src="https://cdn.quasar.dev/img/parallax2.jpg"
-        alt=""
-      />
+      <video ref="video" class="full-width" autoplay></video>
     </div>
     <div class="text-center q-pa-md">
       <q-btn round size="lg" color="grey-10" icon="eva-camera" />
@@ -51,6 +47,20 @@ export default {
         date: Date.now(),
       },
     };
+  },
+  methods: {
+    initCamera() {
+      navigator.mediaDevices
+        .getUserMedia({
+          video: true,
+        })
+        .then((stream) => {
+          this.$refs.video.srcObject = stream;
+        });
+    },
+  },
+  mounted() {
+    this.initCamera();
   },
 };
 </script>
