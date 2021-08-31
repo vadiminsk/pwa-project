@@ -48,12 +48,20 @@
       <div class="row justify-center q-ma-md">
         <q-input
           class="col col-sm-6"
+          :loading="locationLoading"
           v-model="post.location"
           label="Location"
           dense
         >
           <template v-slot:append>
-            <q-btn round dense flat icon="eva-navigation-2-outline" />
+            <q-btn
+              v-if="!locationLoading && locationSupported"
+              @click="getLocation"
+              round
+              dense
+              flat
+              icon="eva-navigation-2-outline"
+            />
           </template>
         </q-input>
       </div>
@@ -83,7 +91,17 @@ export default {
       imageCaptured: false,
       imageUpload: [],
       hasCameraSupport: true,
+      locationLoading: false,
     };
+  },
+
+  computed: {
+    locationSupported() {
+      if ("geolocation" in navigator) {
+        return true;
+      }
+      return false;
+    },
   },
 
   methods: {
@@ -164,6 +182,46 @@ export default {
       // write the ArrayBuffer to a blob, and you're done
       var blob = new Blob([ab], { type: mimeString });
       return blob;
+    },
+
+    getLocation() {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          this.getCityAndCountry(position);
+          this.locationLoading = true;
+        },
+        (err) => {
+          this.locationError();
+        },
+        { timeout: 7000 }
+      );
+    },
+
+    getCityAndCountry(position) {
+      let apiUrl = `https://geocode.xyz/${position.coords.latitude},${position.coords.longitude}?json=1`;
+      this.$axios
+        .get(apiUrl)
+        .then((result) => this.locationSuccess(result))
+        .catch((err) => this.locationError());
+    },
+
+    locationSuccess(result) {
+      this.post.location = result.data.city;
+
+      if (result.data.country) {
+        this.post.location += `, ${result.data.country}`;
+      }
+
+      this.locationLoading = false;
+    },
+
+    locationError() {
+      this.$q.dialog({
+        title: "Error",
+        message: "Could not find the location",
+      });
+
+      this.locationLoading = false;
     },
   },
   mounted() {
