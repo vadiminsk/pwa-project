@@ -233,6 +233,7 @@ export default {
     },
 
     addPost() {
+      this.$q.loading.show();
       let formData = new FormData();
       formData.append("id", this.post.id);
       formData.append("caption", this.post.caption);
@@ -253,12 +254,14 @@ export default {
               },
             ],
           });
+          this.$q.loading.hide();
         })
         .catch((err) => {
           this.$q.dialog({
             title: "Error",
             message: "Sorry, Could not create post",
           });
+          this.$q.loading.hide();
         });
     },
   },
