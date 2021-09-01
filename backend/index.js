@@ -110,7 +110,7 @@ app.post("/createPost", (request, response) => {
           date: parseInt(fields.date),
           imageUrl: `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${uploadedFile.name}?alt=media&token=${uuid}`,
         })
-        .then((response) => {
+        .then(() => {
           response.send("Post added" + fields.id);
         });
     }
