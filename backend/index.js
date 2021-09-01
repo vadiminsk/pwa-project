@@ -17,7 +17,7 @@ admin.initializeApp({
 
 const db = admin.firestore();
 
-//  endpoint
+//  endpoint - posts
 
 app.get("/posts", (request, response) => {
   response.set("Access-Control-Allow-Origin", "*");
@@ -33,6 +33,14 @@ app.get("/posts", (request, response) => {
       });
       response.send(posts);
     });
+});
+
+//  endpoint - createPost
+
+app.post("/createPost", (request, response) => {
+  response.set("Access-Control-Allow-Origin", "*");
+
+  response.send(request.headers);
 });
 
 // listen
