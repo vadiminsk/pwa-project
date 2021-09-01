@@ -18,6 +18,7 @@
       <q-btn
         v-if="hasCameraSupport"
         @click="captureImage"
+        :disable="imageCaptured"
         round
         size="lg"
         color="grey-10"
@@ -41,7 +42,7 @@
         <q-input
           class="col col-sm-6"
           v-model="post.caption"
-          label="Caption"
+          label="Caption *"
           dense
         />
       </div>
@@ -68,6 +69,7 @@
       <div class="row justify-center q-mt-lg">
         <q-btn
           @click="addPost"
+          :disable="!post.photo || !post.caption"
           unelevated
           rounded
           color="primary"
